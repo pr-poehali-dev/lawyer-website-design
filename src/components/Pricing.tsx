@@ -6,90 +6,177 @@ const Pricing = () => {
   const prices = [
     {
       title: "Консультация",
+      subtitle: "Первичная встреча",
       price: "Бесплатно",
-      duration: "30 минут",
-      description: "Первичная оценка вашей ситуации",
+      originalPrice: null,
+      duration: "до 30 минут",
+      description: "Оценка вашей ситуации и правовых перспектив",
       features: [
-        "Анализ документов",
-        "Оценка перспектив дела",
-        "Рекомендации по действиям",
+        "Анализ документов и ситуации",
+        "Оценка шансов на успех",
+        "План действий и стратегия",
+        "Ответы на все вопросы",
       ],
+      popular: false,
+      color: "slate",
     },
     {
-      title: "Представительство",
-      price: "от 15 000 ₽",
-      duration: "за заседание",
-      description: "Защита ваших интересов в суде",
+      title: "Сопровождение дела",
+      subtitle: "Полное ведение",
+      price: "от 45 000 ₽",
+      originalPrice: "60 000 ₽",
+      duration: "до решения суда",
+      description: "Комплексное юридическое сопровождение",
       features: [
-        "Подготовка процессуальных документов",
-        "Участие в судебных заседаниях",
-        "Профессиональная защита",
-      ],
-    },
-    {
-      title: "Полное сопровождение",
-      price: "от 50 000 ₽",
-      duration: "до решения",
-      description: "Комплексное ведение дела",
-      features: [
-        "Все этапы судебного процесса",
+        "Подготовка всех документов",
+        "Представительство в суде",
         "Сбор доказательств",
-        "Исполнение решения суда",
+        "Исполнение решения",
+        "Постоянная связь и отчёты",
       ],
+      popular: true,
+      color: "amber",
+    },
+    {
+      title: "Разовые услуги",
+      subtitle: "По потребности",
+      price: "от 8 000 ₽",
+      originalPrice: null,
+      duration: "за услугу",
+      description: "Отдельные юридические услуги",
+      features: [
+        "Составление документов",
+        "Правовая экспертиза",
+        "Участие в одном заседании",
+        "Переговоры с оппонентами",
+      ],
+      popular: false,
+      color: "slate",
     },
   ];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-gradient-to-br from-slate-50 to-white">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold font-montserrat text-slate-900 mb-4">
-            Прозрачные цены
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center bg-amber-500/10 border border-amber-500/20 rounded-full px-6 py-2 mb-6">
+            <span className="text-amber-600 text-sm font-medium">
+              💰 Прозрачное ценообразование
+            </span>
+          </div>
+          <h2 className="text-5xl font-bold font-montserrat text-slate-900 mb-6">
+            Честные цены без скрытых платежей
           </h2>
-          <p className="text-xl text-slate-600">
-            Честная стоимость без скрытых платежей
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Фиксированная стоимость услуг. Оплата по результату. Первая
+            консультация всегда бесплатная.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {prices.map((plan, index) => (
             <Card
               key={index}
-              className={`hover:shadow-xl transition-all ${index === 1 ? "border-amber-500 shadow-lg scale-105" : "border-slate-200"}`}
+              className={`relative hover:shadow-2xl transition-all duration-300 border-2 ${
+                plan.popular
+                  ? "border-amber-500 shadow-xl scale-105 bg-gradient-to-br from-amber-50 to-white"
+                  : "border-slate-200 hover:border-slate-300 bg-white"
+              }`}
             >
-              <CardHeader className="text-center">
-                <CardTitle className="text-xl font-montserrat text-slate-900 mb-2">
-                  {plan.title}
-                </CardTitle>
-                <div className="mb-2">
-                  <span className="text-3xl font-bold text-amber-600">
-                    {plan.price}
-                  </span>
-                  <span className="text-slate-500 ml-2">{plan.duration}</span>
+              {plan.popular && (
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-amber-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                    ⭐ Популярный выбор
+                  </div>
                 </div>
-                <p className="text-slate-600 text-sm">{plan.description}</p>
+              )}
+
+              <CardHeader className="text-center pb-8 pt-8">
+                <div className="mb-4">
+                  <CardTitle className="text-2xl font-montserrat text-slate-900 mb-2">
+                    {plan.title}
+                  </CardTitle>
+                  <p className="text-sm text-slate-500 font-medium">
+                    {plan.subtitle}
+                  </p>
+                </div>
+
+                <div className="mb-4">
+                  <div className="flex items-center justify-center gap-2">
+                    {plan.originalPrice && (
+                      <span className="text-lg text-slate-400 line-through">
+                        {plan.originalPrice}
+                      </span>
+                    )}
+                    <span
+                      className={`text-4xl font-bold ${plan.popular ? "text-amber-600" : "text-slate-900"}`}
+                    >
+                      {plan.price}
+                    </span>
+                  </div>
+                  <span className="text-slate-500 text-sm">
+                    {plan.duration}
+                  </span>
+                </div>
+
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  {plan.description}
+                </p>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-3 mb-6">
+
+              <CardContent className="pt-0">
+                <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
-                      <Icon
-                        name="Check"
-                        className="text-amber-500 mr-2 mt-0.5 flex-shrink-0"
-                        size={16}
-                      />
-                      <span className="text-slate-600 text-sm">{feature}</span>
+                      <div
+                        className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
+                          plan.popular ? "bg-amber-100" : "bg-slate-100"
+                        }`}
+                      >
+                        <Icon
+                          name="Check"
+                          className={
+                            plan.popular ? "text-amber-600" : "text-slate-600"
+                          }
+                          size={12}
+                        />
+                      </div>
+                      <span className="text-slate-700 text-sm leading-relaxed">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
+
                 <Button
-                  className={`w-full ${index === 1 ? "bg-amber-500 hover:bg-amber-600" : "bg-slate-200 hover:bg-slate-300 text-slate-900"}`}
+                  className={`w-full py-3 font-semibold rounded-xl transition-all ${
+                    plan.popular
+                      ? "bg-amber-500 hover:bg-amber-600 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                      : "bg-slate-100 hover:bg-slate-200 text-slate-900 hover:shadow-md"
+                  }`}
                 >
-                  Связаться
+                  {plan.popular ? "Заказать сейчас" : "Связаться"}
                 </Button>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center mt-16">
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 max-w-2xl mx-auto">
+            <Icon
+              name="Shield"
+              className="text-amber-500 mx-auto mb-4"
+              size={48}
+            />
+            <h3 className="text-xl font-semibold text-slate-900 mb-3">
+              Гарантия результата
+            </h3>
+            <p className="text-slate-600">
+              Если дело будет проиграно по моей вине, верну 100% гонорара.
+              Работаю только с делами, в успехе которых уверена.
+            </p>
+          </div>
         </div>
       </div>
     </section>
